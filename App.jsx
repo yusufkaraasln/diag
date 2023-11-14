@@ -9,6 +9,7 @@ function App() {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           <Text>Hello Diagno</Text>
+          <Text>Hello Dev Branch </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
