@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "46647200541",
+    "project_id": "diagno-97637",
+    "storage_bucket": "diagno-97637.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46647200541:android:013478171c4aa66515aff4",
+        "android_client_info": {
+          "package_name": "com.diagno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46647200541-1glsr0i1g9j53slv9n00aueukpcdp4an.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diagno",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "46647200541-rrdq84e23dtia530v5ibm0nps178h6fm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTDTehGyrvyYfca3_PhZDOla4wgW61SBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46647200541-rrdq84e23dtia530v5ibm0nps178h6fm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
