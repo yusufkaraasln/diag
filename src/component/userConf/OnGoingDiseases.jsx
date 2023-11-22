@@ -13,7 +13,6 @@ const OnGoingDiseases = () => {
   const [search, setSearch] = React.useState('');
   const [toggleCheckBox, setToggleCheckBox] = React.useState(true);
 
- console.log('diseases', diseases);
 
   React.useEffect(() => {
     if (diseases.length > 0 && toggleCheckBox) {

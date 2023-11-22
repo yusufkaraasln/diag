@@ -24,6 +24,7 @@ function Navigator() {
       const res = await getUserByToken(token);
 
       if (res?.success) {
+        console.log('res.data', res.data);
         dispatch(setUser(res.data));
         dispatch(setAge(res.data.user_details.age));
         dispatch(setWeight(res.data.user_details.weight));

@@ -13,8 +13,6 @@ const BeforeDiseases = () => {
   const diseases = useSelector((state) => state.userDetails.before_diseases);
   const dispatch = useDispatch();
 
-  
-
   React.useEffect(() => {
     if (diseases.length > 0 && toggleCheckBox) {
       setToggleCheckBox(false);

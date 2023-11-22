@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../redux/slices/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
+import { setAge, setBeforeDiseases, setOngoingDiseases, setSex, setTall, setWeight } from '../../redux/slices/userDetails';
 
 const GuestSigninOption = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,12 @@ const GuestSigninOption = () => {
 
     if (res.success) {
       dispatch(loginSuccess(res.data));
+      dispatch(setAge(res.data.user.user_details.age));
+      dispatch(setWeight(res.data.user.user_details.weight));
+      dispatch(setTall(res.data.user.user_details.tall));
+      dispatch(setSex(res.data.user.user_details.sex));
+      dispatch(setOngoingDiseases(res.data.user.user_details.ongoing_diseases));
+      dispatch(setBeforeDiseases(res.data.user.user_details.before_diseases));
       await AsyncStorage.setItem('token', res.data.token);
     } else {
       console.log('res.message', res.message);

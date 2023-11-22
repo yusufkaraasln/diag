@@ -10,6 +10,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
 import { FIREBASE_WEB_CLIENT_ID } from '@env';
+import {
+  setAge,
+  setBeforeDiseases,
+  setOngoingDiseases,
+  setSex,
+  setTall,
+  setWeight
+} from '../../redux/slices/userDetails';
 
 GoogleSignin.configure({
   webClientId: FIREBASE_WEB_CLIENT_ID
@@ -31,6 +39,12 @@ const GoogleSigninOption = () => {
 
       if (res.success) {
         dispatch(loginSuccess(res.data));
+        dispatch(setAge(res.data.user.user_details.age));
+        dispatch(setWeight(res.data.user.user_details.weight));
+        dispatch(setTall(res.data.user.user_details.tall));
+        dispatch(setSex(res.data.user.user_details.sex));
+        dispatch(setOngoingDiseases(res.data.user.user_details.ongoing_diseases));
+        dispatch(setBeforeDiseases(res.data.user.user_details.before_diseases));
         await AsyncStorage.setItem('token', res.data.token);
       } else {
         console.log('res.message', res.message);

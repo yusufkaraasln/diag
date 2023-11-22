@@ -1,6 +1,6 @@
 import { View, Text, Dimensions } from 'react-native';
 import React from 'react';
-import Slider from 'react-native-slider';
+import Slider from '@react-native-community/slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAge } from '../../redux/slices/userDetails';
 const UserAge = () => {
