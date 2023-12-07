@@ -7,15 +7,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserByToken } from '../service/auth';
 import { setToken, setUser } from '../redux/slices/auth';
-import SplashScreen from './splash/SplashScreen';
+// import SplashScreen from './splash/SplashScreen';
 import SplashRoute from '../routes/SplashRoute';
 import AppRoute from '../routes/app';
-import { setAge, setBeforeDiseases, setOngoingDiseases, setSex, setTall, setWeight } from '../redux/slices/userDetails';
-
+import {
+  setAge,
+  setBeforeDiseases,
+  setOngoingDiseases,
+  setSex,
+  setTall,
+  setWeight
+} from '../redux/slices/userDetails';
+import SplashScreen from 'react-native-splash-screen';
+import { ToastAndroid } from 'react-native';
 function Navigator() {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!loading) {
+      SplashScreen.hide();
+    } else if (loading) {
+      const timer = setTimeout(() => {
+        ToastAndroid.show(
+          'Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.',
+          ToastAndroid.LONG
+        );
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   React.useEffect(() => {
     (async () => {
@@ -40,8 +63,7 @@ function Navigator() {
     })();
   }, []);
 
-
-  return <NavigationContainer>{loading ? <SplashRoute /> : <AppRoute />}</NavigationContainer>;
+  return <NavigationContainer>{loading ? SplashScreen.show() : <AppRoute />}</NavigationContainer>;
 }
 
 export default Navigator;

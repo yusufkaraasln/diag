@@ -16,6 +16,7 @@ const Header = ({ title, onSave, avatar }) => {
 
     await onSave();
     setLoading(false);
+    navigation.goBack();
   };
 
   const { t } = useTranslation();
