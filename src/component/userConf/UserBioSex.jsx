@@ -2,11 +2,14 @@ import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSex } from '../../redux/slices/userDetails';
+import { useTranslation } from 'react-i18next';
 
 const UserBioSex = () => {
   // const [biologicalSex, setBiologicalSex] = React.useState('Male');
   const biologicalSex = useSelector((state) => state.userDetails.sex);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   return (
     <View>
@@ -23,8 +26,10 @@ const UserBioSex = () => {
             justifyContent: 'space-between',
             width: Dimensions.get('window').width - 50
           }}>
-          <Text style={{ color: '#fff', fontSize: 16 }}>What is your biological sex?</Text>
-          <Text style={{ color: '#00FFD1', fontSize: 16, fontWeight: '900' }}>{biologicalSex}</Text>
+          <Text style={{ color: '#fff', fontSize: 16 }}>{t('what_is_bio_sex')}</Text>
+          <Text style={{ color: '#00FFD1', fontSize: 16, fontWeight: '900' }}>
+            {biologicalSex == 'Female' ? t('female') : t('male')}
+          </Text>
         </View>
         <View
           style={{
@@ -46,7 +51,7 @@ const UserBioSex = () => {
               justifyContent: 'center',
               backgroundColor: biologicalSex == 'Male' ? '#00FFD1' : '#fff'
             }}>
-            <Text style={{ fontWeight: '500', color: '#242526', fontSize: 18 }}>Male</Text>
+            <Text style={{ fontWeight: '500', color: '#242526', fontSize: 18 }}>{t('male')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -59,7 +64,7 @@ const UserBioSex = () => {
               backgroundColor: biologicalSex == 'Female' ? '#00FFD1' : '#fff'
             }}
             onPress={() => dispatch(setSex('Female'))}>
-            <Text style={{ fontWeight: '500', color: '#242526', fontSize: 18 }}>Female</Text>
+            <Text style={{ fontWeight: '500', color: '#242526', fontSize: 18 }}>{t('female')}</Text>
           </TouchableOpacity>
         </View>
       </View>

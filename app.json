@@ -1,4 +1,9 @@
 {
   "name": "diagno",
-  "displayName": "diagno"
+  "displayName": "diagno",
+    "react-native-google-mobile-ads": {
+      "android_app_id": "ca-app-pub-5357093479811799~6642690153"
+      
+    }
 }
+

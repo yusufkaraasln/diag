@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -11,14 +11,15 @@ export default StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: 'white',
+    textAlign: 'center',
+    color: 'white'
   },
 
   logo: {
-    width: 200,
-    height: 200,
-    backgroundColor: 'white',
-    borderRadius: 50,
-    marginBottom: 10
+    width: Dimensions.get('window').width * 0.6,
+    height: Dimensions.get('window').height * 0.3,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });

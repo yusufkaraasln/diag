@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect } from 'react';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -10,27 +10,43 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
 import { FIREBASE_WEB_CLIENT_ID } from '@env';
+import {
+  setAge,
+  setBeforeDiseases,
+  setOngoingDiseases,
+  setSex,
+  setTall,
+  setWeight
+} from '../../redux/slices/userDetails';
 
 GoogleSignin.configure({
   webClientId: FIREBASE_WEB_CLIENT_ID
 });
 
-const GoogleSigninOption = () => {
-  const [loading, setLoading] = React.useState(false);
+const GoogleSigninOption = ({ googleLoading, setGoogleLoading, guestLoading, setGuestLoading }) => {
+  // const [loading, setLoading] = React.useState(false);
+
   const dispatch = useDispatch();
 
   async function onGoogleButtonPress() {
     try {
-      setLoading(true);
+      // setLoading(true);
       await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
 
       // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      setGoogleLoading(true);
 
       const res = await googleAuth(idToken);
 
       if (res.success) {
         dispatch(loginSuccess(res.data));
+        dispatch(setAge(res.data.user.user_details.age));
+        dispatch(setWeight(res.data.user.user_details.weight));
+        dispatch(setTall(res.data.user.user_details.tall));
+        dispatch(setSex(res.data.user.user_details.sex));
+        dispatch(setOngoingDiseases(res.data.user.user_details.ongoing_diseases));
+        dispatch(setBeforeDiseases(res.data.user.user_details.before_diseases));
         await AsyncStorage.setItem('token', res.data.token);
       } else {
         console.log('res.message', res.message);
@@ -46,12 +62,15 @@ const GoogleSigninOption = () => {
         // some other error happened
       }
     } finally {
-      setLoading(false);
+      // setLoading(false);
+      setGoogleLoading(false);
     }
   }
 
+  console.log('Google LOADİNG', googleLoading);
+
   return (
-    <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.8}>
+    <TouchableOpacity onPress={guestLoading ? null : onGoogleButtonPress} activeOpacity={0.8}>
       <View
         style={{
           backgroundColor: 'white',
@@ -60,7 +79,7 @@ const GoogleSigninOption = () => {
           justifyContent: 'center',
           borderRadius: 50
         }}>
-        {loading ? <LoadingIcon color={'#00FFD1'} loading={loading} /> : <GoogleIcon />}
+        {googleLoading ? <LoadingIcon color={'#242526'} loading={googleLoading} /> : <GoogleIcon />}
       </View>
     </TouchableOpacity>
   );

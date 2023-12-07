@@ -1,13 +1,15 @@
 import { View, Text, Dimensions } from 'react-native';
 import React from 'react';
-import Slider from 'react-native-slider';
+import Slider from '@react-native-community/slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWeight } from '../../redux/slices/userDetails';
+import { useTranslation } from 'react-i18next';
 
 const UserWeigh = () => {
   // const [weight, setWeight] = React.useState(80);
   const weight = useSelector((state) => state.userDetails.weight);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <View>
@@ -24,7 +26,7 @@ const UserWeigh = () => {
             justifyContent: 'space-between',
             width: Dimensions.get('window').width - 50
           }}>
-          <Text style={{ color: '#fff', fontSize: 16 }}>How many kilos do you weigh?</Text>
+          <Text style={{ color: '#fff', fontSize: 16 }}>{t('how_many_weight')}</Text>
           <Text style={{ color: '#00FFD1', fontSize: 16, fontWeight: '900' }}>
             {weight > 200 ? '200+' : weight}
           </Text>

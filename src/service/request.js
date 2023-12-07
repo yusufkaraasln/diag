@@ -29,20 +29,24 @@ export default class Request {
   };
 
   static post = async (url, body, headers = {}) => {
-    console.log('api url', API_URL);
-    console.log('api url', API_URL);
+    console.log('url', url);
+    console.log('body', body);
+    console.log('headers', headers);
 
     try {
       const { token } = store.getState().auth;
+      console.log('token', token);
+
       if (token) headers['Authorization'] = `Bearer ${token}`;
       url = API_URL + url;
 
       const { data } = await axios.post(url, body, {
         headers
       });
-      console.log('data', data);
+
       return data;
     } catch (error) {
+      console.log('hata', error);
       return Result({
         success: false,
         message: error.message,
@@ -58,6 +62,25 @@ export default class Request {
       if (token) headers['Authorization'] = `Bearer ${token}`;
       url = API_URL + url;
       const { data } = await axios.put(url, body, {
+        headers
+      });
+      return data;
+    } catch (error) {
+      return Result({
+        success: false,
+        message: error.message,
+        statusCode: error.response?.status
+      });
+    }
+  };
+
+  static delete = async (url, headers = {}) => {
+    try {
+      const { token } = store.getState().auth;
+
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+      url = API_URL + url;
+      const { data } = await axios.delete(url, {
         headers
       });
       return data;

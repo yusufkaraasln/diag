@@ -13,7 +13,7 @@ const StepBar = () => {
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        
+
         gap: 11
       }}>
       {[...Array(configuration_steps.status.total)].map((e, i) => (

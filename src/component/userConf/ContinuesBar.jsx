@@ -4,6 +4,7 @@ import { updateStep } from '../../service/userConfiguration';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../redux/slices/auth';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
+import { useTranslation } from 'react-i18next';
 
 const ContinuesBar = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const ContinuesBar = () => {
     }
     setLoading(false);
   };
+
+  const { t } = useTranslation();
 
   return (
     <View
@@ -44,7 +47,7 @@ const ContinuesBar = () => {
               fontWeight: '900',
               textAlign: 'right'
             }}>
-            NEXT
+            {t('next')}
           </Text>
         )}
       </View>
