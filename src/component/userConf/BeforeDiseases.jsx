@@ -5,6 +5,7 @@ import XMarkIcon from '../../assets/icons/XMarkIcon';
 import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBeforeDiseases } from '../../redux/slices/userDetails';
+import { useTranslation } from 'react-i18next';
 
 const BeforeDiseases = () => {
   // const [diseases, setDiseases] = React.useState([]);
@@ -19,6 +20,8 @@ const BeforeDiseases = () => {
     }
   }, [diseases]);
 
+  const { t } = useTranslation();
+
   return (
     <View
       style={{
@@ -27,7 +30,7 @@ const BeforeDiseases = () => {
         marginTop: 20,
         gap: 20
       }}>
-      <Text style={{ color: '#fff', fontSize: 16 }}>What diseases have we had before?</Text>
+      <Text style={{ color: '#fff', fontSize: 16 }}>{t('what_before_disease')}</Text>
       <View
         style={{
           height: 50,
@@ -46,28 +49,46 @@ const BeforeDiseases = () => {
             justifyContent: 'space-between',
             gap: 10
           }}>
-          <SearchIcon />
+          {/* <SearchIcon /> */}
           <TextInput
             style={{
               height: 50,
               width: Dimensions.get('window').width / 1.5,
-              fontSize: 16
+              fontSize: 16,
+              paddingLeft: Dimensions.get('window').width * 0.03,
+              color: '#242526'
             }}
+            editable={diseases?.length < 5}
             value={search}
             onChangeText={(text) => setSearch(text)}
             placeholderTextColor={'#a0aec0'}
-            placeholder="Search Disease..."
+            placeholder={diseases?.length < 5 ? t('ph_input') : t("max_disease_lim")}
           />
         </View>
 
-        <Text
-          onPress={() => {
-            // setDiseases([...diseases, search]);
-            dispatch(setBeforeDiseases([...diseases, search]));
-            setSearch('');
-          }}>
-          OK
-        </Text>
+        {diseases?.length < 5 && (
+          <Text
+            style={{
+              color: '#00FFD1',
+              fontSize: 16,
+              backgroundColor: '#242526',
+              paddingHorizontal: Dimensions.get('window').width * 0.04,
+              paddingVertical: Dimensions.get('window').width * 0.02,
+              borderRadius: 99,
+
+              fontWeight: 'bold'
+            }}
+            onPress={() => {
+              search &&
+                !diseases.includes(search) &&
+                search.replace(/\s+/g, '').length &&
+                // setDiseases([...diseases, search.trim()]);
+                dispatch(setBeforeDiseases([...diseases, search.trim()]));
+              setSearch('');
+            }}>
+            {t('add')}
+          </Text>
+        )}
       </View>
       <View
         style={{
@@ -82,7 +103,10 @@ const BeforeDiseases = () => {
           tintColors={{ true: '#00FFD1', false: '#fff' }}
           disabled={false}
           value={toggleCheckBox}
-          onValueChange={(newValue) => setToggleCheckBox(newValue)}
+          onValueChange={(newValue) => {
+            dispatch(setBeforeDiseases([]));
+            setToggleCheckBox(newValue);
+          }}
         />
         <Text
           onPress={() => {
@@ -94,7 +118,7 @@ const BeforeDiseases = () => {
             color: '#fff',
             fontSize: 14
           }}>
-          I have not had any illness before
+          {t('dont_have_disease_before')}
         </Text>
       </View>
       <View
@@ -129,7 +153,9 @@ const BeforeDiseases = () => {
             <Text
               style={{
                 fontWeight: '500',
-                maxWidth: Dimensions.get('window').width / 2
+                maxWidth: Dimensions.get('window').width / 2,
+                color: '#242526'
+
               }}
               numberOfLines={1}>
               {item}

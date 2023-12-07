@@ -3,9 +3,13 @@ import React from 'react';
 import GoogleSigninOption from './GoogleSigninOption';
 import GuestSigninOption from './GuestSigninOption';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const SigninOptions = () => {
-  const user = useSelector((state) => state.auth);
+  const { t } = useTranslation();
+
+  const [googleLoading, setGoogleLoading] = React.useState(false);
+  const [guestLoading, setGuestLoading] = React.useState(false);
 
   return (
     <View
@@ -13,9 +17,14 @@ const SigninOptions = () => {
         gap: 20,
         width: Dimensions.get('window').width * 0.8
       }}>
-      <Text style={{ textAlign: 'center', color: '#fff' }}>Sign-in with</Text>
+      <Text style={{ textAlign: 'center', color: '#fff' }}>{t('sign_in_with')}</Text>
 
-      <GoogleSigninOption />
+      <GoogleSigninOption
+        googleLoading={googleLoading}
+        setGoogleLoading={setGoogleLoading}
+        guestLoading={guestLoading}
+        setGuestLoading={setGuestLoading}
+      />
       <View
         style={{
           flexDirection: 'row',
@@ -30,12 +39,17 @@ const SigninOptions = () => {
           }}>
           <View style={{ flex: 1, height: 1, backgroundColor: '#fff' }} />
           <View>
-            <Text style={{ width: 50, textAlign: 'center', color: '#fff' }}>or</Text>
+            <Text style={{ width: 50, textAlign: 'center', color: '#fff' }}>{t('or')}</Text>
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: '#fff' }} />
         </View>
       </View>
-      <GuestSigninOption />
+      <GuestSigninOption
+        googleLoading={googleLoading}
+        setGoogleLoading={setGoogleLoading}
+        guestLoading={guestLoading}
+        setGuestLoading={setGuestLoading}
+      />
     </View>
   );
 };

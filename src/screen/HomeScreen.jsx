@@ -8,14 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/auth';
 import { resetUserDetails } from '../redux/slices/userDetails';
 import MenuIcon from '../assets/icons/MenuIcon';
+import Stethoscope from '../component/home/Stethoscope';
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = () => {
-  const user = useSelector((state) => state.auth);
-
-  const user_details = useSelector((state) => state.userDetails);
-
-  const dispatch = useDispatch();
-
   // useEffect(() => {
   //   const unsubscribe = auth().onAuthStateChanged((user) => {
   //     if (user) {
@@ -29,6 +25,8 @@ const HomeScreen = () => {
   // }, []);
 
   const navigation = useNavigation();
+
+  const { t, i18n } = useTranslation();
 
   return (
     <SafeAreaView
@@ -50,6 +48,50 @@ const HomeScreen = () => {
           <MenuIcon />
         </TouchableOpacity>
       </View>
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: Dimensions.get('window').width * 0.1
+        }}>
+        {i18n.language === 'en' ? (
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: Dimensions.get('window').width * 0.04
+            }}>
+            Press stethoscope to begin the{' '}
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: Dimensions.get('window').width * 0.05,
+                fontWeight: '900'
+              }}>
+              diagno
+            </Text>
+          </Text>
+        ) : (
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: Dimensions.get('window').width * 0.04
+            }}>
+            <Text
+              style={{
+                color: '#fff',
+                paddingRight: Dimensions.get('window').width * 0.05,
+                fontSize: Dimensions.get('window').width * 0.05,
+                fontWeight: '900'
+              }}>
+              diagno
+            </Text>
+            {t('title')}
+          </Text>
+        )}
+        <Stethoscope />
+      </View>
+      <View />
     </SafeAreaView>
   );
 };

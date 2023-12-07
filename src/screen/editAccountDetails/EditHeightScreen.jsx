@@ -6,6 +6,7 @@ import Slider from '@react-native-community/slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTall } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
+import { useTranslation } from 'react-i18next';
 const EditHeightScreen = () => {
   const { tall } = useSelector((state) => state.userDetails);
   const [height, setHeight] = React.useState(tall);
@@ -21,6 +22,8 @@ const EditHeightScreen = () => {
       console.log('tall update failed');
     }
   };
+
+  const { t } = useTranslation();
 
   return (
     <View
@@ -50,7 +53,7 @@ const EditHeightScreen = () => {
                 justifyContent: 'space-between',
                 width: Dimensions.get('window').width - 50
               }}>
-              <Text style={{ color: '#fff', fontSize: 16 }}>How tall are you in cm?</Text>
+              <Text style={{ color: '#fff', fontSize: 16 }}>{t("how_tall_ru")}</Text>
               <Text style={{ color: '#00FFD1', fontSize: 16, fontWeight: '900' }}>
                 {height > 200 ? '200+' : height}
               </Text>

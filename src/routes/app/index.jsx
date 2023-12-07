@@ -13,6 +13,9 @@ import EditHavingDiseasesScreen from '../../screen/editAccountDetails/EditHaving
 import EditPreviousDiseasesScreen from '../../screen/editAccountDetails/EditPreviousDiseasesScreen';
 import EditAgeScreen from '../../screen/editAccountDetails/EditAgeScreen';
 import AccountSettingsScreen from '../../screen/AccountSettingsScreen';
+import DiagnoSelectBodyAreaScreen from '../../screen/DiagnoStartScreen';
+import DiagnoStartScreen from '../../screen/DiagnoStartScreen';
+import DiagnoResultScreen from '../../screen/DiagnoResultScreen';
 
 const AppRoute = () => {
   const Stack = createNativeStackNavigator();
@@ -65,7 +68,16 @@ const AppRoute = () => {
                 name="AccountSettings"
                 component={AccountSettingsScreen}
               />
-
+              <Stack.Screen
+                options={{ headerShown: false, animation: 'none' }}
+                name="DiagnoStart"
+                component={DiagnoStartScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false, animation: 'none' }}
+                name="DiagnoResult"
+                component={DiagnoResultScreen}
+              />
             </>
           ) : (
             <Stack.Screen

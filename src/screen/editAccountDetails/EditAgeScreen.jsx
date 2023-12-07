@@ -5,6 +5,7 @@ import Slider from '@react-native-community/slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAge as setAgeStore } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
+import { useTranslation } from 'react-i18next';
 const EditAgeScreen = () => {
   const userAge = useSelector((state) => state.userDetails?.age);
 
@@ -21,6 +22,8 @@ const EditAgeScreen = () => {
       console.log('age update failed');
     }
   };
+
+  const { t } = useTranslation();
 
   return (
     <View
@@ -49,7 +52,7 @@ const EditAgeScreen = () => {
               justifyContent: 'space-between',
               width: Dimensions.get('window').width - 50
             }}>
-            <Text style={{ color: '#fff', fontSize: 16 }}>How old are you?</Text>
+            <Text style={{ color: '#fff', fontSize: 16 }}>{t('how_old_ru')}</Text>
             <Text style={{ color: '#00FFD1', fontSize: 16, fontWeight: '900' }}>
               {age > 65 ? '65+' : age}
             </Text>

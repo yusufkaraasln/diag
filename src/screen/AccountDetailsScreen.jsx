@@ -12,6 +12,7 @@ import { resetUserDetails } from '../redux/slices/userDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import GoogleAvatar from '../component/accountDetails/GoogleAvatar';
+import { useTranslation } from 'react-i18next';
 
 const AccountDetailsScreen = () => {
   const user = useSelector((state) => state.auth?.user);
@@ -34,6 +35,8 @@ const AccountDetailsScreen = () => {
 
   const navigation = useNavigation();
 
+  const { t } = useTranslation();
+
   return (
     <View
       style={{
@@ -41,7 +44,7 @@ const AccountDetailsScreen = () => {
         backgroundColor: '#242526',
         padding: Dimensions.get('window').width * 0.05
       }}>
-      <Header title="Account Details" />
+      <Header title={t('acc_details_title')} />
 
       {/* Navigate to Account Settings */}
 
@@ -83,26 +86,30 @@ const AccountDetailsScreen = () => {
 
           {/* Navigate to User Details And Edit User Detail Items */}
           <AccountDetailItem
-            title="Height"
+            title={t('height')}
             value={`${user_details?.tall} cm`}
             pushTo={'EditHeight'}
           />
           <AccountDetailItem
-            title="Weight"
+            title={t('weight')}
             value={`${user_details?.weight} kg`}
             pushTo={'EditWeight'}
           />
-          <AccountDetailItem title="Age" value={`${user_details?.age}`} pushTo={'EditAge'} />
+          <AccountDetailItem title={t('age')} value={`${user_details?.age}`} pushTo={'EditAge'} />
           <AccountDetailItem
-            title="Biological Sex"
-            value={`${user_details?.sex} `}
+            title={t('biological_sex')}
+            value={`${user_details?.sex == 'Female' ? t('female') : t('male')} `}
             pushTo={'EditBiologicalSex'}
           />
-          <AccountDetailItem title="Having Diseases" value="" pushTo={'EditHavingDiseases'} />
-          <AccountDetailItem title="Previous Diseases" value="" pushTo={'EditPreviousDiseases'} />
+          <AccountDetailItem title={t('having_diseases')} value="" pushTo={'EditHavingDiseases'} />
+          <AccountDetailItem
+            title={t('previous_diseases')}
+            value=""
+            pushTo={'EditPreviousDiseases'}
+          />
         </View>
       </View>
-      <LogoutItem title="Logout" onPress={signOut} />
+      <LogoutItem title={t('logout')} onPress={signOut} />
     </View>
   );
 };

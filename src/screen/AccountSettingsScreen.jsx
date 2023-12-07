@@ -8,6 +8,7 @@ import DeleteAccountModal from '../modals/DeleteAccountModal';
 import { BlurView } from '@react-native-community/blur';
 import GoogleAvatar from '../component/accountDetails/GoogleAvatar';
 import GuestAvatar from '../component/accountDetails/GuestAvatar';
+import { useTranslation } from 'react-i18next';
 
 const AccountSettingsScreen = () => {
   const user = useSelector((state) => state.auth?.user);
@@ -19,6 +20,9 @@ const AccountSettingsScreen = () => {
     day: '2-digit'
   });
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  const { t } = useTranslation();
+
   return (
     <View
       style={{
@@ -32,15 +36,18 @@ const AccountSettingsScreen = () => {
         avatar={
           user?.auth_type == 'guest' ? <GuestAvatar /> : <GoogleAvatar avatar={user?.avatar} />
         }
-        title="Account Settings"
+        title={t('account_settings_title')}
       />
       <View
         style={{
           marginVertical: Dimensions.get('window').width * 0.1
         }}>
-        <AccountSettingsItem title="Name" value={userName} />
-        <AccountSettingsItem title="Created At" value={formattedCreatedAt} />
-        <AccountSettingsItem title="Account Type" value={user.auth_type} />
+        <AccountSettingsItem title={t('name')} value={userName} />
+        <AccountSettingsItem title={t('created_at')} value={formattedCreatedAt} />
+        <AccountSettingsItem
+          title={t('account_type')}
+          value={user.auth_type == 'guest' ? t('guest') : 'Google'}
+        />
       </View>
       <TouchableOpacity
         activeOpacity={0.8}
@@ -59,7 +66,7 @@ const AccountSettingsScreen = () => {
 
             fontSize: Dimensions.get('window').width * 0.04
           }}>
-          Delete Account
+          {t('delete_account')}
         </Text>
         <View
           style={{

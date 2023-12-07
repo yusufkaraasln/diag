@@ -5,6 +5,7 @@ import LeftIcon from '../../assets/icons/LeftIcon';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
 import GoogleAvatar from './GoogleAvatar';
 import GuestAvatar from './GuestAvatar';
+import { useTranslation } from 'react-i18next';
 
 const Header = ({ title, onSave, avatar }) => {
   const navigation = useNavigation();
@@ -16,6 +17,8 @@ const Header = ({ title, onSave, avatar }) => {
     await onSave();
     setLoading(false);
   };
+
+  const { t } = useTranslation();
 
   return (
     <View
@@ -56,17 +59,13 @@ const Header = ({ title, onSave, avatar }) => {
                   fontWeight: 'bold',
                   fontSize: Dimensions.get('window').width * 0.04
                 }}>
-                SAVE
+                {t('save')}
               </Text>
             </TouchableOpacity>
           )}
         </>
       )}
-      {avatar && (
-        <>
-          {avatar}
-        </>
-      )}
+      {avatar && <>{avatar}</>}
     </View>
   );
 };

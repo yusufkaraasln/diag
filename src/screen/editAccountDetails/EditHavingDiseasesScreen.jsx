@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOngoingDiseases } from '../../redux/slices/userDetails';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import { updateUserDetails } from '../../service/userDetails';
+import { useTranslation } from 'react-i18next';
 
 const EditHavingDiseasesScreen = () => {
   const ongoing_diseases = useSelector((state) => state.userDetails.ongoing_diseases);
@@ -24,12 +25,12 @@ const EditHavingDiseasesScreen = () => {
   const onSave = async () => {
     const res = await updateUserDetails('ongoing_diseases', diseases);
     if (res.success) {
-      console.log('ongoing diseases updated');
       dispatch(setOngoingDiseases(diseases));
     } else {
-      console.log('ongoing diseases update failed');
     }
   };
+
+  const { t } = useTranslation();
 
   return (
     <View
@@ -52,9 +53,7 @@ const EditHavingDiseasesScreen = () => {
             marginTop: 20,
             gap: 20
           }}>
-          <Text style={{ color: '#fff', fontSize: 16 }}>
-            What is your ongoing illness or diseases?
-          </Text>
+          <Text style={{ color: '#fff', fontSize: 16 }}>{t('what_ongoing_disease')}</Text>
           <View
             style={{
               height: 50,
@@ -73,31 +72,45 @@ const EditHavingDiseasesScreen = () => {
                 justifyContent: 'space-between',
                 gap: 10
               }}>
-              <SearchIcon />
+              {/* <SearchIcon /> */}
               <TextInput
                 style={{
                   height: 50,
                   width: Dimensions.get('window').width / 1.5,
                   fontSize: 16,
+                  paddingLeft: Dimensions.get('window').width * 0.03,
                   color: '#242526'
                 }}
+                editable={diseases?.length < 5}
                 value={search}
                 onChangeText={(text) => setSearch(text)}
                 placeholderTextColor={'#a0aec0'}
-                placeholder="Search Disease..."
+                placeholder={diseases?.length < 5 ? t('ph_input') : t("max_disease_lim")}
               />
             </View>
 
-            <Text
-              onPress={() => {
-                search &&
-                  !diseases.includes(search) &&
-                  search.replace(/\s+/g, '').length &&
-                  setDiseases([...diseases, search.trim()]);
-                setSearch('');
-              }}>
-              OK
-            </Text>
+            {diseases?.length < 5 && (
+              <Text
+                style={{
+                  color: '#00FFD1',
+                  fontSize: 16,
+                  backgroundColor: '#242526',
+                  paddingHorizontal: Dimensions.get('window').width * 0.04,
+                  paddingVertical: Dimensions.get('window').width * 0.02,
+                  borderRadius: 99,
+
+                  fontWeight: 'bold'
+                }}
+                onPress={() => {
+                  search &&
+                    !diseases.includes(search) &&
+                    search.replace(/\s+/g, '').length &&
+                    setDiseases([...diseases, search.trim()]);
+                  setSearch('');
+                }}>
+                {t('add')}
+              </Text>
+            )}
           </View>
           <View
             style={{
@@ -112,7 +125,10 @@ const EditHavingDiseasesScreen = () => {
               tintColors={{ true: '#00FFD1', false: '#fff' }}
               disabled={false}
               value={toggleCheckBox}
-              onValueChange={(newValue) => setToggleCheckBox(newValue)}
+              onValueChange={(newValue) => {
+                setDiseases([]);
+                setToggleCheckBox(newValue);
+              }}
             />
             <Text
               onPress={() => {
@@ -124,7 +140,7 @@ const EditHavingDiseasesScreen = () => {
                 color: '#fff',
                 fontSize: 14
               }}>
-              I do not have any disease
+              {t("dont_have_disease_ongoing")}
             </Text>
           </View>
           <View

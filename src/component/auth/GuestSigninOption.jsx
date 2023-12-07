@@ -5,14 +5,22 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../redux/slices/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
-import { setAge, setBeforeDiseases, setOngoingDiseases, setSex, setTall, setWeight } from '../../redux/slices/userDetails';
+import {
+  setAge,
+  setBeforeDiseases,
+  setOngoingDiseases,
+  setSex,
+  setTall,
+  setWeight
+} from '../../redux/slices/userDetails';
+import { useTranslation } from 'react-i18next';
 
-const GuestSigninOption = () => {
+const GuestSigninOption = ({ googleLoading, setGoogleLoading, guestLoading, setGuestLoading }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(false);
 
   const onGuestSignin = async () => {
-    setLoading(true);
+    // setLoading(true);
+    setGuestLoading(true);
     const res = await guestAuth();
 
     if (res.success) {
@@ -27,23 +35,27 @@ const GuestSigninOption = () => {
     } else {
       console.log('res.message', res.message);
     }
-    setLoading(false);
+    // setLoading(false);
+    setGuestLoading(false);
   };
 
+  const { t } = useTranslation();
+
   return (
-    <TouchableOpacity onPress={onGuestSignin} activeOpacity={0.8}>
+    <TouchableOpacity onPress={googleLoading ? null : onGuestSignin} activeOpacity={0.8}>
       <View
         style={{
           backgroundColor: '#00FFD1',
           alignItems: 'center',
+          justifyContent: 'center',
           paddingVertical: 18,
           height: 60,
           borderRadius: 50
         }}>
-        {loading ? (
-          <LoadingIcon color={'#242526'} loading={loading} />
+        {guestLoading ? (
+          <LoadingIcon color={'#242526'} loading={guestLoading} />
         ) : (
-          <Text style={{ fontWeight: '900' }}>As a Guest</Text>
+          <Text style={{ fontWeight: '900', color: '#242526' }}>{t('as_a_guest')}</Text>
         )}
       </View>
     </TouchableOpacity>

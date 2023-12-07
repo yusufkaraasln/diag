@@ -7,6 +7,7 @@ import { resetUserDetails } from '../redux/slices/userDetails';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingIcon from '../assets/icons/LoadingIcon';
+import { useTranslation } from 'react-i18next';
 
 const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
     }
     setLoading(false);
   };
+
+  const { t } = useTranslation();
 
   return (
     <View>
@@ -47,7 +50,7 @@ const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
               position: 'absolute'
             }}></Pressable>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure you want to delete your account?</Text>
+            <Text style={styles.modalText}>{t('delete_account_confirmation')}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -62,12 +65,11 @@ const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'center'
-                    }}
-                  >
+                    }}>
                     <LoadingIcon color={'#fff'} loading={loading} />
                   </View>
                 ) : (
-                  <Text style={styles.textStyle}>Yes</Text>
+                  <Text style={styles.textStyle}>{t('yes')}</Text>
                 )}
               </Pressable>
               <Pressable style={styles.buttonClose} onPress={() => setModalVisible(!modalVisible)}>
@@ -76,7 +78,7 @@ const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
                     ...styles.textStyle,
                     color: '#242526'
                   }}>
-                  No
+                  {t('no')}
                 </Text>
               </Pressable>
             </View>
