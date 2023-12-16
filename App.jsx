@@ -5,6 +5,7 @@ import Navigator from './src/screen';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import Orientation from 'react-native-orientation-locker';
+import codePush from 'react-native-code-push';
 function App() {
   const deviceLanguage = NativeModules.I18nManager.localeIdentifier; // Android
 
@@ -20,4 +21,4 @@ function App() {
   );
 }
 
-export default App;
+export default codePush(App);

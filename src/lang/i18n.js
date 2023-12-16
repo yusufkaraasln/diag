@@ -6,6 +6,7 @@ import { NativeModules } from 'react-native';
 
 // default => browser language
 const deviceLanguage = NativeModules.I18nManager.localeIdentifier;
+
 const split = deviceLanguage.split('_');
 const language = split[0];
 

@@ -1,4 +1,11 @@
-import { View, Text, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  ActivityIndicator,
+  ToastAndroid
+} from 'react-native';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStart, setStep } from '../redux/slices/startDiagno';
@@ -9,11 +16,23 @@ import AdMobModal from '../modals/AdMobModal';
 import { setDiagno, setLoading } from '../redux/slices/endDiagno';
 import { makeDiagno } from '../service/makeDiagno';
 import { useTranslation } from 'react-i18next';
+import { AdEventType, InterstitialAd } from 'react-native-google-mobile-ads';
+import { useNavigation } from '@react-navigation/native';
+
+// GOOGLE ADS
+const adUnitId = 'ca-app-pub-5357093479811799/1004140653';
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: ['fashion', 'clothing']
+});
+// GOOGLE ADS
 
 const DiagnoStartScreen = () => {
   const dispatch = useDispatch();
   const step = useSelector((state) => state.startDiagno?.step);
   const { t, i18n } = useTranslation();
+
+  const [loaded, setLoaded] = React.useState(false);
 
   React.useEffect(() => {
     dispatch(setStep(1));
@@ -22,32 +41,105 @@ const DiagnoStartScreen = () => {
     };
   }, []);
 
-  const [adModalShow, setAdModalShow] = useState(false);
-
   const { bodyPart, prompt } = useSelector((state) => state.startDiagno);
   console.log('prompt', prompt?.length);
+  // const makeDiagnoAndShowAd = async () => {
+  //   if (loaded) {
+  //     interstitial.show();
+
+  //     navigation.navigate('DiagnoResult');
+
+  //     dispatch(setLoading(true));
+
+  //     const res = await makeDiagno({
+  //       userComplaints: prompt,
+  //       closestPainArea: bodyPart.slug,
+  //       lang: i18n.language
+  //     });
+
+  //     if (res.success) {
+  //       dispatch(setLoading(false));
+  //       dispatch(setDiagno(res.data));
+  //     } else {
+  //       dispatch(setLoading(false));
+  //     }
+  //   } else {
+  //     navigation.navigate('DiagnoResult');
+
+  //     dispatch(setLoading(true));
+
+  //     const res = await makeDiagno({
+  //       userComplaints: prompt,
+  //       closestPainArea: bodyPart.slug,
+  //       lang: i18n.language
+  //     });
+
+  //     if (res.success) {
+  //       dispatch(setLoading(false));
+  //       dispatch(setDiagno(res.data));
+  //     } else {
+  //       dispatch(setLoading(false));
+  //     }
+  //   }
+  // };
+
   const makeDiagnoAndShowAd = async () => {
-    console.log('bu prompt', prompt);
-
-    setAdModalShow(true);
-
+    navigation.navigate('DiagnoResult');
     dispatch(setLoading(true));
 
-    console.log('bu ajaxın bir üzerindeki log prompt', prompt);
-    console.log('bu ajaxın bir üzerindeki log bodyPart', bodyPart);
+    if (loaded) {
+      interstitial.show();
+    }
+
     const res = await makeDiagno({
       userComplaints: prompt,
       closestPainArea: bodyPart.slug,
       lang: i18n.language
     });
 
+    dispatch(setLoading(false));
+
     if (res.success) {
-      dispatch(setLoading(false));
       dispatch(setDiagno(res.data));
-    } else {
-      dispatch(setLoading(false));
     }
   };
+
+  console.log("Reklam yüklenme durumu", loaded);
+
+  // GOOGLE ADS SHOW
+
+  const navigation = useNavigation();
+
+  const [adModalShow, setAdModalShow] = useState(false);
+
+  React.useEffect(() => {
+    const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+      setLoaded(true);
+      // setAdModalShow(false);
+      // navigation.navigate('DiagnoResult');
+    });
+
+    const unsubscribeError = interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
+      ToastAndroid.showWithGravityAndOffset(
+        t('loading_ad_failed'),
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      );
+      // setAdModalShow(false);
+      // navigation.navigate('Home');
+    });
+
+    interstitial.load();
+
+    return () => {
+      unsubscribeLoaded();
+      unsubscribeError();
+    };
+  }, []);
+
+  // GOOGLE ADS SHOW
 
   return (
     <View
