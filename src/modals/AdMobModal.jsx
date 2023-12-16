@@ -1,106 +1,68 @@
 import { View, Text, Modal, ActivityIndicator, Dimensions, ToastAndroid } from 'react-native';
 import React from 'react';
 
-// import { RewardedAd, TestIds, RewardedAdEventType } from 'react-native-google-mobile-ads';
 import { InterstitialAd, TestIds, AdEventType } from 'react-native-google-mobile-ads';
 
 import { useNavigation } from '@react-navigation/native';
-import { setDiagno, setLoading } from '../redux/slices/endDiagno';
-import { makeDiagno } from '../service/makeDiagno';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { useTranslation } from 'react-i18next';
 
-// const adUnitId = __DEV__ ? TestIds.REWARDED : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+// const adUnitId = 'ca-app-pub-5357093479811799/1004140653';
 
-// const rewarded = RewardedAd.createForAdRequest(adUnitId, {
+
+// const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
 //   requestNonPersonalizedAdsOnly: true,
 //   keywords: ['fashion', 'clothing']
 // });
 
-// const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-5357093479811799/1004140653';
-const adUnitId = 'ca-app-pub-5357093479811799/1004140653';
-
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing']
-});
-
 const AdMobModal = ({ adModalShow, setAdModalShow }) => {
-  const [loaded, setLoaded] = React.useState(false);
+  // const [loaded, setLoaded] = React.useState(false);
 
-  const navigation = useNavigation();
-
-  const dispatch = useDispatch();
+  // const navigation = useNavigation();
 
   const { t } = useTranslation();
 
   // React.useEffect(() => {
-  //   const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //   const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
   //     setLoaded(true);
+  //     setAdModalShow(false);
+  //     navigation.navigate('DiagnoResult');
   //   });
-  //   const unsubscribeEarned = rewarded.addAdEventListener(
-  //     RewardedAdEventType.EARNED_REWARD,
-  //     (reward) => {
-  //       setAdModalShow(false);
-  //       navigation.navigate('DiagnoResult');
-  //     }
-  //   );
 
-  //   // Start loading the rewarded ad straight away
-  //   rewarded.load();
+  //   const unsubscribeError = interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       t('loading_ad_failed'),
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50
+  //     );
+  //     setAdModalShow(false);
+  //     navigation.navigate('Home');
+  //   });
 
-  //   console.log('loaded', loaded);
+  //   interstitial.load();
 
-  //   // Unsubscribe from events on unmount
   //   return () => {
   //     unsubscribeLoaded();
-  //     unsubscribeEarned();
+  //     unsubscribeError();
   //   };
   // }, []);
 
-  React.useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-      setLoaded(true);
-    });
+  // console.log('Google Reklam loaded', loaded);
 
-    // Start loading the interstitial straight away
-    interstitial.load();
+  // React.useEffect(() => {
+  //   if (loaded) interstitial.show();
+  // }, [loaded]);
 
-    // Unsubscribe from events on unmount
-    return unsubscribe;
-  }, []);
+  // React.useEffect(() => {
+  //   const unsubscribe = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
+  //     setAdModalShow(false);
+  //     navigation.navigate('DiagnoResult');
+  //   });
 
-  React.useEffect(() => {
-    if (loaded && adModalShow) {
-      interstitial.show();
-      setAdModalShow(false);
-      navigation.navigate('DiagnoResult');
-    } else if (!loaded && adModalShow) {
-      const timeout = setInterval(() => {
-        ToastAndroid.showWithGravityAndOffset(
-          t('loading_ad_failed'),
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-        setAdModalShow(false);
-        navigation.navigate('DiagnoResult');
-      }, 3500);
-
-      return () => {
-        clearInterval(timeout);
-      };
-    }
-    // wait 3 seconds and try again
-  }, [
-    loaded,
-    adModalShow,
-
-    interstitial
-    // RewardedAdEventType.LOADED,
-    // RewardedAdEventType.EARNED_REWARD
-  ]);
+  //   return () => unsubscribe();
+  // }, [interstitial]);
 
   return (
     <Modal
@@ -117,7 +79,7 @@ const AdMobModal = ({ adModalShow, setAdModalShow }) => {
           justifyContent: 'center',
           backgroundColor: '#242526'
         }}>
-        {!loaded && (
+        {/* {!loaded && ( */}
           <View
             style={{
               gap: Dimensions.get('window').width * 0.05
@@ -131,7 +93,7 @@ const AdMobModal = ({ adModalShow, setAdModalShow }) => {
             </Text>
             <ActivityIndicator />
           </View>
-        )}
+        {/* )} */}
       </View>
     </Modal>
   );

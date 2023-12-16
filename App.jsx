@@ -4,15 +4,14 @@ import { NativeModules, StatusBar } from 'react-native';
 import Navigator from './src/screen';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
-import SplashScreen from 'react-native-splash-screen';
+import Orientation from 'react-native-orientation-locker';
+import codePush from 'react-native-code-push';
 function App() {
-  React.useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
   const deviceLanguage = NativeModules.I18nManager.localeIdentifier; // Android
 
   console.log('deviceLanguage', deviceLanguage);
+
+  Orientation.lockToPortrait();
 
   return (
     <Provider store={store}>
@@ -22,4 +21,4 @@ function App() {
   );
 }
 
-export default App;
+export default codePush(App);

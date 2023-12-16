@@ -35,8 +35,12 @@ const UserAge = () => {
           style={{
             width: Dimensions.get('window').width - 50,
 
+            width: Dimensions.get('window').width - 180,
+            transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }],
             height: 40
           }}
+         
+
           value={age}
           onValueChange={(value) => dispatch(setAge(value))}
           step={1}
