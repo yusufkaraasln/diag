@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/auth';
 import UserInputs from '../../component/userConf/UserInputs';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const UserConfigurationScreen = () => {
   // const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const UserConfigurationScreen = () => {
   // }, []);
 
   return (
+
+   
     <View
       style={{
         flex: 1,
@@ -36,6 +39,7 @@ const UserConfigurationScreen = () => {
 
       <ContinuesBar />
     </View>
+   
   );
 };
 

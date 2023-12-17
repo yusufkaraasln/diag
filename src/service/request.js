@@ -29,7 +29,8 @@ export default class Request {
   };
 
   static post = async (url, body, headers = {}) => {
-    console.log('url', url);
+    
+    console.log('****URL****', API_URL + url);
     console.log('body', body);
     console.log('headers', headers);
 

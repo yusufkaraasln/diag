@@ -16,12 +16,14 @@ import AccountSettingsScreen from '../../screen/AccountSettingsScreen';
 import DiagnoSelectBodyAreaScreen from '../../screen/DiagnoStartScreen';
 import DiagnoStartScreen from '../../screen/DiagnoStartScreen';
 import DiagnoResultScreen from '../../screen/DiagnoResultScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AppRoute = () => {
   const Stack = createNativeStackNavigator();
   const user = useSelector((state) => state.auth?.user);
   const configuration_steps = useSelector((state) => state.auth?.user?.configuration_steps);
   return (
+    
     <Stack.Navigator>
       {user ? (
         <>
@@ -90,7 +92,9 @@ const AppRoute = () => {
       ) : (
         <Stack.Screen options={{ headerShown: false }} name="Auth" component={AuthScreen} />
       )}
+      
     </Stack.Navigator>
+   
   );
 };
 

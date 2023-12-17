@@ -20,6 +20,7 @@ import {
 } from '../redux/slices/userDetails';
 import SplashScreen from 'react-native-splash-screen';
 import { ToastAndroid } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 function Navigator() {
   const dispatch = useDispatch();
 
@@ -63,7 +64,12 @@ function Navigator() {
     })();
   }, []);
 
-  return <NavigationContainer>{loading ? SplashScreen.show() : <AppRoute />}</NavigationContainer>;
+  return <NavigationContainer>{loading ? SplashScreen.show() :
+    
+    
+    <AppRoute />
+  
+    }</NavigationContainer>;
 }
 
 export default Navigator;

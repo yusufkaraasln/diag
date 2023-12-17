@@ -5,7 +5,11 @@ import en from './resources/en';
 import { NativeModules } from 'react-native';
 
 // default => browser language
-const deviceLanguage = NativeModules.I18nManager.localeIdentifier;
+const deviceLanguage =
+Platform.OS === 'ios'
+  ? NativeModules.SettingsManager.settings.AppleLocale ||
+    NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13 ve öncesi
+  : NativeModules.I18nManager.localeIdentifier;; // Android
 
 const split = deviceLanguage.split('_');
 const language = split[0];

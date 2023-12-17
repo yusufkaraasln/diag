@@ -38,6 +38,8 @@ const AccountDetailsScreen = () => {
   const { t } = useTranslation();
 
   return (
+
+    
     <View
       style={{
         flex: 1,
