@@ -64,12 +64,7 @@ function Navigator() {
     })();
   }, []);
 
-  return <NavigationContainer>{loading ? SplashScreen.show() :
-    
-    
-    <AppRoute />
-  
-    }</NavigationContainer>;
+  return <NavigationContainer>{loading ? SplashScreen.show() : <AppRoute />}</NavigationContainer>;
 }
 
 export default Navigator;

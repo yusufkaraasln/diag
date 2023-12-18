@@ -9,6 +9,7 @@ import { BlurView } from '@react-native-community/blur';
 import GoogleAvatar from '../component/accountDetails/GoogleAvatar';
 import GuestAvatar from '../component/accountDetails/GuestAvatar';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AccountSettingsScreen = () => {
   const user = useSelector((state) => state.auth?.user);
@@ -24,7 +25,7 @@ const AccountSettingsScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -77,7 +78,7 @@ const AccountSettingsScreen = () => {
           <RightIcon color={'#fff'} />
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

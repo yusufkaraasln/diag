@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSex as setSexStore } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const EditBiologicalSexScreen = () => {
   const userSex = useSelector((state) => state.userDetails.sex);
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const EditBiologicalSexScreen = () => {
   console.log(t('female'));
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -96,7 +97,7 @@ const EditBiologicalSexScreen = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

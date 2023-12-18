@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setWeight as setWeightStore } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const EditWeightScreen = () => {
   const userWeigh = useSelector((state) => state.userDetails?.weight);
   const [weight, setWeight] = React.useState(userWeigh);
@@ -25,7 +26,7 @@ const EditWeightScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -60,7 +61,7 @@ const EditWeightScreen = () => {
           <Slider
             style={{
               transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }],
-              width: Dimensions.get('window').width - 180,
+              width: Dimensions.get('window').width - 50,
               height: 40
             }}
             value={weight}
@@ -74,7 +75,7 @@ const EditWeightScreen = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

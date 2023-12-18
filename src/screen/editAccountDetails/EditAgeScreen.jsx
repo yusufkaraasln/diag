@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAge as setAgeStore } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const EditAgeScreen = () => {
   const userAge = useSelector((state) => state.userDetails?.age);
 
@@ -26,7 +27,7 @@ const EditAgeScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -60,7 +61,7 @@ const EditAgeScreen = () => {
 
           <Slider
             style={{
-              width: Dimensions.get('window').width - 180,
+              width: Dimensions.get('window').width - 50,
               transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }],
               height: 40
             }}
@@ -75,7 +76,7 @@ const EditAgeScreen = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

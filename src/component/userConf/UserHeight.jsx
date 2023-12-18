@@ -35,7 +35,7 @@ const UserHeight = () => {
 
         <Slider
           style={{
-            width: Dimensions.get('window').width - 180,
+            width: Dimensions.get('window').width - 50,
             height: 40,
             transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }]
           }}

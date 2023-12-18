@@ -5,12 +5,9 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBodyPart } from '../../redux/slices/startDiagno';
 import { useTranslation } from 'react-i18next';
-const DiagnoSelectBody = () => {
+const DiagnoSelectBody = ({ isBackSideEnabled }) => {
   const bodyPart = useSelector((state) => state.startDiagno?.bodyPart);
   const dispatch = useDispatch();
-
-  const [isBackSideEnabled, setIsBackSideEnabled] = useState(false);
-  const toggleSwitch = () => setIsBackSideEnabled((previousState) => !previousState);
 
   React.useEffect(() => {
     const backAction = () => {
@@ -34,9 +31,8 @@ const DiagnoSelectBody = () => {
       <Text
         style={{
           color: '#fff',
-          fontSize: 16,
-          textAlign: 'center',
-          marginBottom: Dimensions.get('window').height * 0.03
+          fontSize: Dimensions.get('window').width * 0.04,
+          textAlign: 'center'
         }}>
         {t('body_select_title')}
       </Text>
@@ -45,13 +41,7 @@ const DiagnoSelectBody = () => {
         colors={{ 2: '#00FFD1', 1: '#00FFD1', 0: '#00FFD1' }}
         onBodyPartPress={(e) => dispatch(setBodyPart({ slug: e.slug, intensity: e.intensity }))}
         side={isBackSideEnabled ? 'back' : 'front'}
-        scale={1.5}
-      />
-      <Switch
-        onValueChange={toggleSwitch}
-        thumbColor={'#00FFD1'}
-        trackColor={{ false: 'gray', true: '#00FFD1' }}
-        value={isBackSideEnabled}
+        scale={Dimensions.get('screen').height * 0.0019}
       />
     </View>
   );

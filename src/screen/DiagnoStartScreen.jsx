@@ -4,7 +4,9 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
-  ToastAndroid
+  ToastAndroid,
+  
+  Switch
 } from 'react-native';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,9 +20,10 @@ import { makeDiagno } from '../service/makeDiagno';
 import { useTranslation } from 'react-i18next';
 import { AdEventType, InterstitialAd } from 'react-native-google-mobile-ads';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // GOOGLE ADS
-const adUnitId = 'ca-app-pub-5357093479811799/1004140653';
+const adUnitId = 'ca-app-pub-5357093479811799/3508170019';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: true,
   keywords: ['fashion', 'clothing']
@@ -40,6 +43,9 @@ const DiagnoStartScreen = () => {
       dispatch(setStart(false));
     };
   }, []);
+
+
+ 
 
   const { bodyPart, prompt } = useSelector((state) => state.startDiagno);
   console.log('prompt', prompt?.length);
@@ -104,7 +110,7 @@ const DiagnoStartScreen = () => {
     }
   };
 
-  console.log("Reklam yüklenme durumu", loaded);
+  console.log('Reklam yüklenme durumu', loaded);
 
   // GOOGLE ADS SHOW
 
@@ -141,8 +147,11 @@ const DiagnoStartScreen = () => {
 
   // GOOGLE ADS SHOW
 
+  const [isBackSideEnabled, setIsBackSideEnabled] = useState(false);
+  const toggleSwitch = () => setIsBackSideEnabled((previousState) => !previousState);
+
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -151,11 +160,15 @@ const DiagnoStartScreen = () => {
         justifyContent: 'space-between'
       }}>
       {adModalShow && <AdMobModal adModalShow={adModalShow} setAdModalShow={setAdModalShow} />}
-      <DiagnoStartStepbar step={step} />
+      {
+        //   <DiagnoStartStepbar step={step} />
+      }
       {
         {
-          1: <DiagnoSelectBody />,
-          2: <DiagnoEnterPrompt />
+          1: <DiagnoSelectBody isBackSideEnabled={isBackSideEnabled} />,
+          2: <DiagnoEnterPrompt 
+            makeDiagno={makeDiagnoAndShowAd}
+          />
         }[step]
       }
       <View
@@ -179,28 +192,57 @@ const DiagnoStartScreen = () => {
           <View></View>
         )}
         {(step == 2 && prompt?.length >= 1) || step == 1 ? (
-          <TouchableOpacity
-            onPress={async () => {
-              if (step == 2) {
-                makeDiagnoAndShowAd();
-              } else {
-                dispatch(setStep(step + 1));
-              }
-            }}
-            activeOpacity={0.8}>
+          <View
+            style={{
+              width: `${step == 1 ? '100%' : '0'}`,
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-between'
+            }}>
             <Text
+            onPress={() => navigation.goBack()}
               style={{
-                color: '#00FFD1',
+                color: '#ccc',
                 fontSize: Dimensions.get('window').width * 0.04,
                 fontWeight: '900',
+                display: step== 1  ? "flex" :  "none",
+               
                 textAlign: 'right'
               }}>
-              {t('next')}
+              {t('prev')}
             </Text>
-          </TouchableOpacity>
+            {step == 1 && (
+              <Switch
+                onValueChange={toggleSwitch}
+                thumbColor={'#00FFD1'}
+                trackColor={{ false: 'gray', true: '#00FFD1' }}
+                value={isBackSideEnabled}
+              />
+            )}
+
+            <TouchableOpacity
+              onPress={async () => {
+                if (step == 2) {
+                  makeDiagnoAndShowAd();
+                } else {
+                  dispatch(setStep(step + 1));
+                }
+              }}
+              activeOpacity={0.8}>
+              <Text
+                style={{
+                  color: '#00FFD1',
+                  fontSize: Dimensions.get('window').width * 0.04,
+                  fontWeight: '900',
+                  textAlign: 'right'
+                }}>
+                {t('next')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         ) : null}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

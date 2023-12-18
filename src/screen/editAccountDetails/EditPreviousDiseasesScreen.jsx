@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setBeforeDiseases } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const EditPreviousDiseasesScreen = () => {
   const before_diseases = useSelector((state) => state.userDetails.before_diseases);
@@ -35,7 +36,7 @@ const EditPreviousDiseasesScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -63,7 +64,7 @@ const EditPreviousDiseasesScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              paddingHorizontal: 10,
+              paddingHorizontal: Dimensions.get("window").width *0.01,
               borderRadius: 50,
               width: Dimensions.get('window').width - 50
             }}>
@@ -87,31 +88,38 @@ const EditPreviousDiseasesScreen = () => {
                 value={search}
                 onChangeText={(text) => setSearch(text)}
                 placeholderTextColor={'#a0aec0'}
-                placeholder={diseases?.length < 5 ? t('ph_input') : t("max_disease_lim")}
+                placeholder={diseases?.length < 5 ? t('ph_input') : t('max_disease_lim')}
               />
             </View>
 
             {diseases?.length < 5 && (
-              <Text
-                style={{
-                  color: '#00FFD1',
-                  fontSize: 16,
-                  backgroundColor: '#242526',
-                  paddingHorizontal: Dimensions.get('window').width * 0.04,
-                  paddingVertical: Dimensions.get('window').width * 0.02,
-                  borderRadius: 99,
-
-                  fontWeight: 'bold'
-                }}
+              <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => {
                   search &&
                     !diseases.includes(search) &&
                     search.replace(/\s+/g, '').length &&
                     setDiseases([...diseases, search.trim()]);
+
                   setSearch('');
                 }}>
-                {t('add')}
-              </Text>
+                <View
+                  style={{
+                    backgroundColor: '#242526',
+                    paddingHorizontal: Dimensions.get('window').width * 0.04,
+                    paddingVertical: Dimensions.get('window').width * 0.02,
+                    borderRadius: 99
+                  }}>
+                  <Text
+                    style={{
+                      color: '#00FFD1',
+                      fontSize: 16,
+                      fontWeight: 'bold'
+                    }}>
+                    {t('add')}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             )}
           </View>
           <View
@@ -122,8 +130,10 @@ const EditPreviousDiseasesScreen = () => {
               gap: 10
             }}>
             <CheckBox
+             onTintColor='#00FFD1'
               onCheckColor="#00FFD1"
-              tintColor="#00FFD1"
+             
+              tintColor={toggleCheckBox ? '#00FFD1' : '#ccc'}
               tintColors={{ true: '#00FFD1', false: '#fff' }}
               disabled={false}
               value={toggleCheckBox}
@@ -189,7 +199,7 @@ const EditPreviousDiseasesScreen = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

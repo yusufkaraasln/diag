@@ -3,20 +3,25 @@ import React from 'react';
 
 const GuestAvatar = () => {
   return (
-    <Text
+    <View
       style={{
-        textAlign: 'center',
         width: Dimensions.get('window').width * 0.12,
         height: Dimensions.get('window').width * 0.12,
-        fontSize: Dimensions.get('window').width * 0.08,
-        borderRadius: Dimensions.get('window').width,
         backgroundColor: '#fff',
-        textAlignVertical: 'center',
-        fontWeight: 'bold',
-        color: '#242526'
+        borderRadius: Dimensions.get('window').width,
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
-      G
-    </Text>
+      <Text
+        style={{
+          fontSize: Dimensions.get('window').width * 0.08,
+
+          fontWeight: 'bold',
+          color: '#242526'
+        }}>
+        G
+      </Text>
+    </View>
   );
 };
 

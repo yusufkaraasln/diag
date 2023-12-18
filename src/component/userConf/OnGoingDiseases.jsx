@@ -38,7 +38,7 @@ const OnGoingDiseases = () => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingHorizontal: 10,
+          paddingHorizontal: Dimensions.get("window").width *0.01,
           borderRadius: 50,
           width: Dimensions.get('window').width - 50
         }}>
@@ -62,22 +62,13 @@ const OnGoingDiseases = () => {
             value={search}
             onChangeText={(text) => setSearch(text)}
             placeholderTextColor={'#a0aec0'}
-            placeholder={diseases?.length < 5 ? t('ph_input') : t("max_disease_lim")}
+            placeholder={diseases?.length < 5 ? t('ph_input') : t('max_disease_lim')}
           />
         </View>
 
         {diseases?.length < 5 && (
-          <Text
-            style={{
-              color: '#00FFD1',
-              fontSize: 16,
-              backgroundColor: '#242526',
-              paddingHorizontal: Dimensions.get('window').width * 0.04,
-              paddingVertical: Dimensions.get('window').width * 0.02,
-              borderRadius: 99,
-
-              fontWeight: 'bold'
-            }}
+          <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => {
               search &&
                 !diseases.includes(search) &&
@@ -86,8 +77,23 @@ const OnGoingDiseases = () => {
                 dispatch(setOngoingDiseases([...diseases, search.trim()]));
               setSearch('');
             }}>
-            {t('add')}
-          </Text>
+            <View
+              style={{
+                backgroundColor: '#242526',
+                paddingHorizontal: Dimensions.get('window').width * 0.04,
+                paddingVertical: Dimensions.get('window').width * 0.02,
+                borderRadius: 99
+              }}>
+              <Text
+                style={{
+                  color: '#00FFD1',
+                  fontSize: 16,
+                  fontWeight: 'bold'
+                }}>
+                {t('add')}
+              </Text>
+            </View>
+          </TouchableOpacity>
         )}
       </View>
       <View
@@ -99,7 +105,8 @@ const OnGoingDiseases = () => {
         }}>
         <CheckBox
           onCheckColor="#00FFD1"
-          tintColor="#00FFD1"
+          onTintColor='#00FFD1'
+          tintColor={toggleCheckBox ? '#00FFD1' : '#ccc'}
           tintColors={{ true: '#00FFD1', false: '#fff' }}
           disabled={false}
           value={toggleCheckBox}
@@ -118,7 +125,7 @@ const OnGoingDiseases = () => {
             color: '#fff',
             fontSize: 14
           }}>
-          {t("dont_have_disease_ongoing")}
+          {t('dont_have_disease_ongoing')}
         </Text>
       </View>
       <View
@@ -155,7 +162,6 @@ const OnGoingDiseases = () => {
                 fontWeight: '500',
                 maxWidth: Dimensions.get('window').width / 2,
                 color: '#242526'
-
               }}
               numberOfLines={1}>
               {item}

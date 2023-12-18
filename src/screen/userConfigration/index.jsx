@@ -25,7 +25,12 @@ const UserConfigurationScreen = () => {
 
   return (
 
-   
+    <SafeAreaView
+    style={{
+      flex: 1,
+      backgroundColor: "#242526"
+    }}
+    >
     <View
       style={{
         flex: 1,
@@ -39,7 +44,7 @@ const UserConfigurationScreen = () => {
 
       <ContinuesBar />
     </View>
-   
+   </SafeAreaView>
   );
 };
 

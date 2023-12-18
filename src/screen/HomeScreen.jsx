@@ -34,12 +34,12 @@ const HomeScreen = () => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#242526',
-        padding: Dimensions.get('window').width * 0.06
+        backgroundColor: '#242526'
       }}>
       <View
         style={{
-          width: '100%',
+          width: Dimensions.get('window').width,
+          padding: Dimensions.get('window').width * 0.03,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'flex-end'

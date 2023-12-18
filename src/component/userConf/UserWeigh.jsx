@@ -35,7 +35,7 @@ const UserWeigh = () => {
         <Slider
           style={{
             transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }],
-              width: Dimensions.get('window').width - 180,
+              width: Dimensions.get('window').width - 50,
               height: 40
           }}
           value={weight}

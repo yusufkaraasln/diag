@@ -16,6 +16,7 @@ import SingleDiseaseCard from '../component/diagnoResult/SingleDiseaseCard';
 import DiagnoResultLoadingModal from '../modals/DiagnoResultLoadingModal';
 import { setDiagno } from '../redux/slices/endDiagno';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DiagnoResultScreen = () => {
   const navigation = useNavigation();
@@ -54,22 +55,21 @@ const DiagnoResultScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         backgroundColor: '#242526',
-        flex: 1
+        flex: 1,
+        paddingHorizontal: Dimensions.get('window').height * 0.01
+        
       }}>
-      {Header(translateY, navigation, backAction)}
+
       <ScrollView
         onScroll={(e) => {
           scrollY.setValue(e.nativeEvent.contentOffset.y);
         }}>
         <DiagnoResultLoadingModal />
-        <View
-          style={{
-            paddingVertical: Dimensions.get('window').height * 0.1,
-            paddingHorizontal: Dimensions.get('window').width * 0.01
-          }}>
+          <Header translateY={translateY} backAction={backAction} />
+        
           <View
             style={{
               gap: Dimensions.get('window').height * 0.03
@@ -94,24 +94,32 @@ const DiagnoResultScreen = () => {
                 'There is no general summary and advice for this disease'
               }
             />
+            <View
+            style={{
+              borderRadius: Dimensions.get('window').width * 0.04,
+              padding: Dimensions.get('window').width * 0.03,
+              marginHorizontal: Dimensions.get('window').width * 0.02,
+              backgroundColor: '#00FFD1',
+              marginBottom: Dimensions.get('window').height * 0.03,
+            }}
+            >
+
             <Text
               style={{
+                
+                
                 color: '#242526',
                 fontSize: Dimensions.get('window').width * 0.04,
-                backgroundColor: '#00FFD1',
-                marginHorizontal: Dimensions.get('window').width * 0.02,
-                padding: Dimensions.get('window').width * 0.03,
-                borderRadius: Dimensions.get('window').width * 0.04,
-
-                marginBottom: Dimensions.get('window').height * 0.03,
+                
                 textAlign: 'left'
               }}>
               {t('result_info')}
             </Text>
+          
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

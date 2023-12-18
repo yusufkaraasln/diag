@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTall } from '../../redux/slices/userDetails';
 import { updateUserDetails } from '../../service/userDetails';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const EditHeightScreen = () => {
   const { tall } = useSelector((state) => state.userDetails);
   const [height, setHeight] = React.useState(tall);
@@ -26,7 +27,7 @@ const EditHeightScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#242526',
@@ -61,7 +62,7 @@ const EditHeightScreen = () => {
 
             <Slider
               style={{
-                width: Dimensions.get('window').width - 180,
+                width: Dimensions.get('window').width - 50,
                 height: 40,
                 transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }]
               }}
@@ -77,7 +78,7 @@ const EditHeightScreen = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

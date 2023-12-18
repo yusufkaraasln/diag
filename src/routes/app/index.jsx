@@ -23,7 +23,6 @@ const AppRoute = () => {
   const user = useSelector((state) => state.auth?.user);
   const configuration_steps = useSelector((state) => state.auth?.user?.configuration_steps);
   return (
-    
     <Stack.Navigator>
       {user ? (
         <>
@@ -71,12 +70,14 @@ const AppRoute = () => {
                 component={AccountSettingsScreen}
               />
               <Stack.Screen
-                options={{ headerShown: false, animation: 'none' }}
+                options={{ headerShown: false, gestureEnabled: false, animation: 'none' }}
                 name="DiagnoStart"
                 component={DiagnoStartScreen}
               />
               <Stack.Screen
-                options={{ headerShown: false, animation: 'none' }}
+                options={{ headerShown: false, animation: 'none',
+                gestureEnabled: false
+              }}
                 name="DiagnoResult"
                 component={DiagnoResultScreen}
               />
@@ -92,9 +93,7 @@ const AppRoute = () => {
       ) : (
         <Stack.Screen options={{ headerShown: false }} name="Auth" component={AuthScreen} />
       )}
-      
     </Stack.Navigator>
-   
   );
 };
 
