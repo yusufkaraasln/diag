@@ -10,22 +10,27 @@ import LoadingIcon from '../assets/icons/LoadingIcon';
 import { useTranslation } from 'react-i18next';
 
 const DeleteAccountModal = ({ setModalVisible, modalVisible }) => {
+
+  
   const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
+
   const deleteAccount = async () => {
-    setLoading(true);
-    const res = await deleteUser();
-    if (res.success) {
-      try {
-        await GoogleSignin.signOut();
+    try {
+      setLoading(true);
+      const res = await deleteUser();
+      if (res.success) {
         dispatch(logout());
         dispatch(resetUserDetails());
         await AsyncStorage.removeItem('token');
-      } catch (error) {
-        console.error(error);
       }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setModalVisible(false);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const { t } = useTranslation();

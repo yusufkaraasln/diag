@@ -13,7 +13,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AccountSettingsScreen = () => {
   const user = useSelector((state) => state.auth?.user);
-  const userName = user?.auth_type == 'guest' ? user?.name.slice(0, 19) : user?.name;
+  const userName =
+    user?.auth_type == 'google'
+      ? user?.name
+      : user?.auth_type == 'apple'
+      ? user?.email.split('@')[0]
+      : user?.name.slice(0, 19);
 
   const formattedCreatedAt = new Date(user?.createdAt).toLocaleDateString('en-EN', {
     year: 'numeric',
@@ -47,7 +52,7 @@ const AccountSettingsScreen = () => {
         <AccountSettingsItem title={t('created_at')} value={formattedCreatedAt} />
         <AccountSettingsItem
           title={t('account_type')}
-          value={user.auth_type == 'guest' ? t('guest') : 'Google'}
+          value={user.auth_type == 'guest' ? t('guest') : user.auth_type}
         />
       </View>
       <TouchableOpacity

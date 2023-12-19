@@ -68,55 +68,68 @@ const DiagnoResultScreen = () => {
           scrollY.setValue(e.nativeEvent.contentOffset.y);
         }}>
         <DiagnoResultLoadingModal />
-          <Header translateY={translateY} backAction={backAction} />
+          {
+            diagno?.disease_name ? <Header translateY={translateY} backAction={backAction} /> : null
+          }
         
           <View
             style={{
               gap: Dimensions.get('window').height * 0.03
             }}>
             <SingleDiseaseCard
-              title={t('disease_name')}
-              content={diagno?.disease_name || 'There is no disease name for this disease'}
+              title={
+                  diagno?.disease_name ?
+                t('disease_name'): ""}
+              content={diagno?.disease_name || ''}
             />
 
             <SingleDiseaseCard
-              title={t('medicine_department')}
-              content={diagno?.disease_medicine_department || 'There is no medicine department'}
+              title={
+                  diagno?.disease_medicine_department ?
+                t('medicine_department') : ""}
+              content={diagno?.disease_medicine_department || ''}
             />
             <SingleDiseaseCard
-              title={t('why_this_disease')}
-              content={diagno?.why || 'There is no why for this disease'}
+              title={
+                diagno?.why ?
+                t('why_this_disease'): ""}
+              content={diagno?.why || ''}
             />
             <SingleDiseaseCard
-              title={t('general_summary_and_advice')}
+              title={
+                diagno?.general_summary_and_advice ? 
+                t('general_summary_and_advice') : ""}
               content={
                 diagno?.general_summary_and_advice ||
-                'There is no general summary and advice for this disease'
+                ''
               }
             />
-            <View
-            style={{
-              borderRadius: Dimensions.get('window').width * 0.04,
-              padding: Dimensions.get('window').width * 0.03,
-              marginHorizontal: Dimensions.get('window').width * 0.02,
-              backgroundColor: '#00FFD1',
-              marginBottom: Dimensions.get('window').height * 0.03,
-            }}
-            >
-
-            <Text
+           {
+             diagno?.disease_name ?
+              <View
               style={{
+                borderRadius: Dimensions.get('window').width * 0.04,
+                padding: Dimensions.get('window').width * 0.03,
+                marginHorizontal: Dimensions.get('window').width * 0.02,
+                backgroundColor: '#00FFD1',
+                marginBottom: Dimensions.get('window').height * 0.03,
+              }}
+              >
                 
-                
-                color: '#242526',
-                fontSize: Dimensions.get('window').width * 0.04,
-                
-                textAlign: 'left'
-              }}>
-              {t('result_info')}
-            </Text>
-          
-          </View>
+              <Text
+                style={{
+                  
+                  
+                  color: '#242526',
+                  fontSize: Dimensions.get('window').width * 0.04,
+                  
+                  textAlign: 'left'
+                }}>
+                {t('result_info')}
+              </Text>
+            
+            </View> : null
+           }
         </View>
       </ScrollView>
     </SafeAreaView>

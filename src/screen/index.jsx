@@ -31,10 +31,7 @@ function Navigator() {
       SplashScreen.hide();
     } else if (loading) {
       const timer = setTimeout(() => {
-        ToastAndroid.show(
-          'Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.',
-          ToastAndroid.LONG
-        );
+        console.log("Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.'")
       }, 5000);
 
       return () => clearTimeout(timer);

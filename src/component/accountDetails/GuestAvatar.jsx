@@ -1,7 +1,13 @@
 import { View, Text, Dimensions } from 'react-native';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-const GuestAvatar = () => {
+const GuestAvatar = (props ) => {
+   
+  const user = useSelector((state) => state.auth?.user);
+
+  
+  
   return (
     <View
       style={{
@@ -19,7 +25,10 @@ const GuestAvatar = () => {
           fontWeight: 'bold',
           color: '#242526'
         }}>
-        G
+        {
+          user.auth_type == "guest" ? "G": 
+          user.email.slice(0,1).toUpperCase()
+        }
       </Text>
     </View>
   );

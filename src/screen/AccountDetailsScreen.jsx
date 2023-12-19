@@ -17,8 +17,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AccountDetailsScreen = () => {
   const user = useSelector((state) => state.auth?.user);
-  const userName = user?.auth_type == 'guest' ? user?.name.slice(0, 19) : user?.name;
-
+  const userName =
+    user?.auth_type == 'google'
+      ? user?.name
+      : user?.auth_type == 'apple'
+      ? user?.email.split('@')[0]
+      : user?.name.slice(0, 19);
   const dispatch = useDispatch();
 
   async function signOut() {
@@ -45,78 +49,72 @@ const AccountDetailsScreen = () => {
         backgroundColor: '#242526',
         padding: Dimensions.get('window').width * 0.05
       }}>
-     
-        <Header title={t('acc_details_title')} />
+      <Header title={t('acc_details_title')} />
 
-        {/* Navigate to Account Settings */}
+      {/* Navigate to Account Settings */}
 
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'space-between'
-          }}>
-          <View>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('AccountSettings')}
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'space-between'
+        }}>
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('AccountSettings')}
+            style={{
+              marginVertical: Dimensions.get('window').width * 0.1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+            <View
               style={{
-                marginVertical: Dimensions.get('window').width * 0.1,
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between'
+                justifyContent: 'flex-start',
+                gap: Dimensions.get('window').width * 0.05
               }}>
-              <View
+              {user?.avatar ? <GoogleAvatar avatar={user?.avatar} /> : <GuestAvatar />}
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  gap: Dimensions.get('window').width * 0.05
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  fontSize: Dimensions.get('window').width * 0.04,
+                  textTransform: 'capitalize'
                 }}>
-                {user?.avatar ? <GoogleAvatar avatar={user?.avatar} /> : <GuestAvatar />}
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: 'bold',
-                    fontSize: Dimensions.get('window').width * 0.04,
-                    textTransform: 'capitalize'
-                  }}>
-                  {userName}
-                </Text>
-              </View>
-              <RightIcon color={'#fff'} />
-            </TouchableOpacity>
+                {userName}
+              </Text>
+            </View>
+            <RightIcon color={'#fff'} />
+          </TouchableOpacity>
 
-            {/* Navigate to User Details And Edit User Detail Items */}
-            <AccountDetailItem
-              title={t('height')}
-              value={`${user_details?.tall} cm`}
-              pushTo={'EditHeight'}
-            />
-            <AccountDetailItem
-              title={t('weight')}
-              value={`${user_details?.weight} kg`}
-              pushTo={'EditWeight'}
-            />
-            <AccountDetailItem title={t('age')} value={`${user_details?.age}`} pushTo={'EditAge'} />
-            <AccountDetailItem
-              title={t('biological_sex')}
-              value={`${user_details?.sex == 'Female' ? t('female') : t('male')} `}
-              pushTo={'EditBiologicalSex'}
-            />
-            <AccountDetailItem
-              title={t('having_diseases')}
-              value=""
-              pushTo={'EditHavingDiseases'}
-            />
-            <AccountDetailItem
-              title={t('previous_diseases')}
-              value=""
-              pushTo={'EditPreviousDiseases'}
-            />
-          </View>
+          {/* Navigate to User Details And Edit User Detail Items */}
+          <AccountDetailItem
+            title={t('height')}
+            value={`${user_details?.tall} cm`}
+            pushTo={'EditHeight'}
+          />
+          <AccountDetailItem
+            title={t('weight')}
+            value={`${user_details?.weight} kg`}
+            pushTo={'EditWeight'}
+          />
+          <AccountDetailItem title={t('age')} value={`${user_details?.age}`} pushTo={'EditAge'} />
+          <AccountDetailItem
+            title={t('biological_sex')}
+            value={`${user_details?.sex == 'Female' ? t('female') : t('male')} `}
+            pushTo={'EditBiologicalSex'}
+          />
+          <AccountDetailItem title={t('having_diseases')} value="" pushTo={'EditHavingDiseases'} />
+          <AccountDetailItem
+            title={t('previous_diseases')}
+            value=""
+            pushTo={'EditPreviousDiseases'}
+          />
         </View>
-        <LogoutItem title={t('logout')} onPress={signOut} />
-     
+      </View>
+      <LogoutItem title={t('logout')} onPress={signOut} />
     </SafeAreaView>
   );
 };

@@ -55,7 +55,7 @@ const GuestSigninOption = ({ googleLoading, setGoogleLoading, guestLoading, setG
         {guestLoading ? (
           <LoadingIcon color={'#242526'} loading={guestLoading} />
         ) : (
-          <Text style={{ fontWeight: '900', color: '#242526' }}>{t('as_a_guest')}</Text>
+          <Text style={{ fontWeight: '700', color: '#242526' }}>{t('as_a_guest')}</Text>
         )}
       </View>
     </TouchableOpacity>

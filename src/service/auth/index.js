@@ -4,6 +4,10 @@ export const googleAuth = (idToken) => {
   return Request.post('/auth/google-login', { idToken });
 };
 
+export const appleServerAuth = (credentials) => {
+  return Request.post("/auth/apple-login",credentials)
+}
+
 export const guestAuth = () => {
   return Request.post('/auth/guest-login');
 };

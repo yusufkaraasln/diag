@@ -4,6 +4,7 @@ import GoogleSigninOption from './GoogleSigninOption';
 import GuestSigninOption from './GuestSigninOption';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import AppleSigninOption from './AppleSigninOption';
 
 const SigninOptions = () => {
   const { t } = useTranslation();
@@ -18,12 +19,20 @@ const SigninOptions = () => {
         width: Dimensions.get('window').width * 0.8
       }}>
       <Text style={{ textAlign: 'center', color: '#fff' }}>{t('sign_in_with')}</Text>
+      {/*
 
       <GoogleSigninOption
-        googleLoading={googleLoading}
-        setGoogleLoading={setGoogleLoading}
-        guestLoading={guestLoading}
-        setGuestLoading={setGuestLoading}
+      googleLoading={googleLoading}
+      setGoogleLoading={setGoogleLoading}
+      guestLoading={guestLoading}
+      setGuestLoading={setGuestLoading}
+      />
+      */}
+       <AppleSigninOption
+      googleLoading={googleLoading}
+      setGoogleLoading={setGoogleLoading}
+      guestLoading={guestLoading}
+      setGuestLoading={setGuestLoading}
       />
       <View
         style={{

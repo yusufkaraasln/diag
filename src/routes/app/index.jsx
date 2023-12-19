@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import HomeScreen from '../../screen/HomeScreen';
@@ -22,6 +22,9 @@ const AppRoute = () => {
   const Stack = createNativeStackNavigator();
   const user = useSelector((state) => state.auth?.user);
   const configuration_steps = useSelector((state) => state.auth?.user?.configuration_steps);
+
+    
+
   return (
     <Stack.Navigator>
       {user ? (
