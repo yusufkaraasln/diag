@@ -36,7 +36,6 @@ const DiagnoSelectBody = () => {
           color: '#fff',
           fontSize: 16,
           textAlign: 'center',
-          marginBottom: Dimensions.get('window').height * 0.03
         }}>
         {t('body_select_title')}
       </Text>
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#242526',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-evenly'
   }
 });
 

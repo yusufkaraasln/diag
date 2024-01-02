@@ -1,9 +1,13 @@
 const diagnosis_result = {
   diagno_results: 'Diagno Results',
   disease_name: 'Disease Name',
+  disease_name_detailed_description: 'What is ',
+  general_symptoms: 'General Symptoms',
   medicine_department: 'Medicine Department',
   why_this_disease: 'Why this disease?',
   general_summary_and_advice: 'General Summary and Advice',
+  treatment_methods: 'Treatment Methods',
+  good_thigs_for_disease: 'Good Things for Disease',
 
   loading_ad: 'Loading Ad...',
   loading_ad_failed: 'Ad could not be loaded.',

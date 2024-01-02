@@ -151,7 +151,6 @@ const DiagnoStartScreen = () => {
         justifyContent: 'space-between'
       }}>
       {adModalShow && <AdMobModal adModalShow={adModalShow} setAdModalShow={setAdModalShow} />}
-      <DiagnoStartStepbar step={step} />
       {
         {
           1: <DiagnoSelectBody />,

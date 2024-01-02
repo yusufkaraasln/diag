@@ -78,14 +78,35 @@ const DiagnoResultScreen = () => {
               title={t('disease_name')}
               content={diagno?.disease_name || 'There is no disease name for this disease'}
             />
-
+            <SingleDiseaseCard
+              title={t('disease_name_detailed_description') + diagno?.disease_name}
+              content={
+                diagno?.disease_name_detailed_description ||
+                'There is no disease name for this disease'
+              }
+            />
             <SingleDiseaseCard
               title={t('medicine_department')}
               content={diagno?.disease_medicine_department || 'There is no medicine department'}
             />
             <SingleDiseaseCard
+              listed
+              title={t('general_symptoms')}
+              content={diagno?.disease_symptoms || 'There is no disease name for this disease'}
+            />
+            <SingleDiseaseCard
               title={t('why_this_disease')}
               content={diagno?.why || 'There is no why for this disease'}
+            />
+            <SingleDiseaseCard
+              listed
+              title={t('treatment_methods')}
+              content={diagno?.disease_treatment || 'There is no disease name for this disease'}
+            />
+            <SingleDiseaseCard
+              listed
+              title={t('good_thigs_for_disease')}
+              content={diagno?.disease_good_for || 'There is no disease name for this disease'}
             />
             <SingleDiseaseCard
               title={t('general_summary_and_advice')}

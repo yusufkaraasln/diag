@@ -1,9 +1,13 @@
 const diagnosis_result = {
   diagno_results: 'Diagno Sonuçları',
   disease_name: 'Hastalık Adı',
+  disease_name_detailed_description: 'Nedir bu ',
   medicine_department: 'Tıp Departmanı',
   why_this_disease: 'Neden Bu Hastalık?',
   general_summary_and_advice: 'Genel Özet ve Tavsiye',
+  general_symptoms: 'Genel Belirtiler',
+  treatment_methods: 'Tedavi Yöntemleri',
+  good_thigs_for_disease: 'İyi Gelen Şeyler',
 
   loading_ad: 'Reklam Yükleniyor...',
   loading_ad_failed: 'Reklam Yüklenemedi.',
